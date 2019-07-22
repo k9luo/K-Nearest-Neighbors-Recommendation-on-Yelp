@@ -13,7 +13,7 @@ class K_Nearest_Neighbor(object):
     def predict(self, matrix_train, k):
         prediction_scores = []
         for user_index in tqdm(range(matrix_train.shape[0])):
-            # Get user u's prediction scores for all items
+            # Get user u's similarity to all users
             vector_u = self.similarity[user_index]
 
             # Get closest K neighbors excluding user u self
