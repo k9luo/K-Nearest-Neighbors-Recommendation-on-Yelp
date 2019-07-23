@@ -21,6 +21,7 @@ def main(args):
     if args.validation:
         print("Valid File Name: {}".format(args.valid))
     print("Algorithm: {}".format(args.model))
+    print("Lambda Diversity: {}".format(args.lambda_diversity))
     print("Lambda Serendipity: {}".format(args.lambda_serendipity))
     print("Nearest Neighbor Number: {}".format(args.k))
     print("Evaluation Ranking Topk: {}".format(args.topk))
@@ -39,6 +40,7 @@ def main(args):
     progress.section("Predict")
     prediction_score = model.predict(R_train,
                                      k=args.k,
+                                     lambda_diversity=args.lambda_diversity,
                                      lambda_serendipity=args.lambda_serendipity)
 
     prediction = predict(prediction_score=prediction_score,
@@ -67,6 +69,7 @@ if __name__ == "__main__":
     parser.add_argument('--k', dest='k', type=check_int_positive, default=10)
     parser.add_argument('--model', dest='model', default="KNN")
     parser.add_argument('--path', dest='path', default="data/yelp/")
+    parser.add_argument('--lambda_diversity', dest='lambda_diversity', type=check_float_positive, default=0)
     parser.add_argument('--lambda_serendipity', dest='lambda_serendipity', type=check_float_positive, default=0)
     parser.add_argument('--topk', dest='topk', type=check_int_positive, default=50)
     parser.add_argument('--train', dest='train', default='Rtrain.npz')
