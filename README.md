@@ -10,7 +10,7 @@ python getyelp.py --enable_implicit --ratio 0.5,0.2,0.3 --data_dir data/yelp/ --
 
 ### Single Run
 ```
-python main.py --path data/yelp/ --model KNN --k 90
+python main.py --path data/yelp/ --model KNN --k 90 --lambda_serendipity 0.1
 ```
 
 ### Hyper-parameter Tuning
