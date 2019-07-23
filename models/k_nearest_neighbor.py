@@ -32,8 +32,7 @@ class K_Nearest_Neighbor(object):
             prediction_score = np.sum(prediction_scores_u, axis=0)
 
             if lambda_serendipity != 0:
-                self.add_serendipity(num_users, item_pop_matrix, prediction_score, lambda_serendipity)
-
+                prediction_score = self.add_serendipity(num_users, item_pop_matrix, prediction_score, lambda_serendipity)
 
             prediction_scores.append(prediction_score)
 
