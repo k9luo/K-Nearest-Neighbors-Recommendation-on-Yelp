@@ -10,8 +10,13 @@ class K_Nearest_Neighbor(object):
     def train(self, matrix_train):
         self.similarity = cosine_similarity(X=matrix_train, Y=None, dense_output=True)
 
-    def predict(self, matrix_train, k):
+    def predict(self, matrix_train, k, lambda_serendipity=0):
         prediction_scores = []
+
+        if lambda_serendipity != 0:
+            item_pop_matrix = matrix_train.toarray().sum(axis=0)
+            num_users = matrix_train.shape[0]
+
         for user_index in tqdm(range(matrix_train.shape[0])):
             # Get user u's similarity to all users
             vector_u = self.similarity[user_index]
@@ -24,7 +29,17 @@ class K_Nearest_Neighbor(object):
             similar_users_ratings = matrix_train[similar_users].toarray()
 
             prediction_scores_u = similar_users_ratings * similar_users_weights[:, np.newaxis]
+            prediction_score = np.sum(prediction_scores_u, axis=0)
 
-            prediction_scores.append(np.sum(prediction_scores_u, axis=0))
+            if lambda_serendipity != 0:
+                self.add_serendipity(num_users, item_pop_matrix, prediction_score, lambda_serendipity)
+
+
+            prediction_scores.append(prediction_score)
 
         return np.array(prediction_scores)
+
+    def add_serendipity(self, num_users, item_pop_matrix, prediction_score, lambda_serendipity):
+        serendipity = (1 - lambda_serendipity) + lambda_serendipity * np.log10(num_users/(item_pop_matrix+1))
+        return prediction_score * serendipity
+
