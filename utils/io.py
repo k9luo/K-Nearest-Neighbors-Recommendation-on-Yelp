@@ -101,9 +101,8 @@ def get_yelp_df(path, sampling=False, top_user_num=6100, top_item_num=4000):
 
 
 def filter_yelp_df(df, top_user_num=6100, top_item_num=4000):
-    df_implicit = df[df['review_stars']>3]
-    frequent_user_id = df_implicit['user_num_id'].value_counts().head(top_user_num).index.values
-    frequent_item_id = df_implicit['business_num_id'].value_counts().head(top_item_num).index.values
+    frequent_user_id = df['user_num_id'].value_counts().head(top_user_num).index.values
+    frequent_item_id = df['business_num_id'].value_counts().head(top_item_num).index.values
     return df.loc[(df['user_num_id'].isin(frequent_user_id)) & (df['business_num_id'].isin(frequent_item_id))]
 
 
