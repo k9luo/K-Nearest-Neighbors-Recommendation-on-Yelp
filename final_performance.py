@@ -10,13 +10,20 @@ import timeit
 def main(args):
     table_path = load_yaml('config/global.yml', key='path')['tables']
 
-    df = find_best_hyperparameters(table_path+args.tuning_result_path, 'NDCG')
+    df = find_best_hyperparameters(table_path+args.tuning_result_path, 'MAP@10')
 
     R_train = load_numpy(path=args.path, name=args.train)
     R_valid = load_numpy(path=args.path, name=args.valid)
     R_test = load_numpy(path=args.path, name=args.test)
 
     R_train = R_train + R_valid
+
+#    R_train[(R_train <= 3).nonzero()] = 0
+#    R_test[(R_test <= 3).nonzero()] = 0
+
+#    R_train[(R_train > 3).nonzero()] = 1
+#    R_test[(R_test > 3).nonzero()] = 1
+#    import ipdb; ipdb.set_trace()
 
     topK = [5, 10, 15, 20, 50]
 
