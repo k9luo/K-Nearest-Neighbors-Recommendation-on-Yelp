@@ -3,9 +3,14 @@ This repo implements and evaluates K-Nearest Neighbor model on Yelp Academic Dat
 
 # Example Commands
 
-### Data Split
+### Data Split with Implicit Data
 ```
 python getyelp.py --enable_implicit --ratio 0.5,0.2,0.3 --data_dir data/yelp/ --data_name yelp_academic_dataset_review.json
+```
+
+### Data Split with Explicit Data
+```
+python getyelp.py --ratio 0.5,0.2,0.3 --data_dir data/yelp/ --data_name yelp_academic_dataset_review.json
 ```
 
 ### Single Run
@@ -13,12 +18,12 @@ python getyelp.py --enable_implicit --ratio 0.5,0.2,0.3 --data_dir data/yelp/ --
 python main.py --path data/yelp/ --model KNN --k 90 --lambda_serendipity 0.1
 ```
 
-### Hyper-parameter Tuning
+### Hyper-parameter Tuning with Explicit Data
 
 Split data in experiment setting, and tune hyper parameters based on yaml files in `config` folder. 
 
 ```
-python getyelp.py --enable_implicit --ratio 0.5,0.2,0.3 --data_dir data/yelp/ --data_name yelp_academic_dataset_review.json
+python getyelp.py --ratio 0.5,0.2,0.3 --data_dir data/yelp/ --data_name yelp_academic_dataset_review.json
 python tune_parameters.py --parameters config/k_nearest_neighbor.yml --path data/yelp/ --save_path yelp/knn_tuning.csv
 ```
 
